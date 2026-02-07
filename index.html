@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Chasmish 🌹</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ffd1ff, #a18cd1);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating "Heyy Chasmish" Text in Background */
+        .bg-text {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.4);
+            font-family: 'Dancing Script', cursive;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatText linear infinite;
+        }
+
+        @keyframes floatText {
+            0% { transform: translate(-100%, 110vh) rotate(-15deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translate(100vw, -10vh) rotate(15deg); opacity: 0; }
+        }
+
+        /* Glassmorphism Card */
+        .card {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 2.5rem;
+            text-align: center;
+            max-width: 90%;
+            width: 450px;
+            z-index: 10;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(214, 51, 132, 0.3);
+            font-size: 3.2rem;
+            margin-bottom: 10px;
+        }
+
+        .emoji-stage {
+            font-size: 100px;
+            height: 140px;
+            margin: 20px 0;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
+            margin: 20px 0;
+            height: 14px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff4d6d, #ff8fa3);
+            transition: width 0.5s ease;
+        }
+
+        .btn {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background: #d63384;
+        }
+
+        .letter {
+            display: none;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            color: #444;
+            text-align: left;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            animation: slideUp 0.8s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: #ff4d6d;
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .heart-confetti {
+            position: fixed;
+            top: -10px;
+            animation: fall linear forwards;
+            z-index: 100;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="floating-elements"></div>
+
+    <div class="card">
+        <h1>Happy Rose Day</h1>
+        <p style="color: white; font-weight: 600;">To my favorite Chasmish 🤓</p>
+        
+        <div class="emoji-stage" id="flower">🌱</div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <button class="btn" id="waterBtn" onclick="waterPlant()">💧 Shower her with love</button>
+
+        <div class="letter" id="loveLetter">
+            <p><strong>Heyy Chasmish,</strong></p>
+            <br>
+            <p>Those glasses can't hide how beautiful your eyes are. Just like this rose, you make my world brighter every single day. Keep smiling, my love!</p>
+            <div class="signature">- Always Yours, Rhythm</div>
+        </div>
+    </div>
+
+    <script>
+        let growthLevel = 0;
+
+        // Function to create background "Heyy Chasmish" text
+        function createFloatingText() {
+            const container = document.getElementById('floating-elements');
+            const elements = ['Heyy Chasmish ❤️', '🤓', '🌹', 'My Love'];
+            
+            setInterval(() => {
+                const div = document.createElement('div');
+                div.classList.add('bg-text');
+                div.innerText = elements[Math.floor(Math.random() * elements.length)];
+                div.style.left = Math.random() * 80 + 'vw';
+                div.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                div.style.animationDuration = (Math.random() * 8 + 7) + 's';
+                container.appendChild(div);
+                
+                setTimeout(() => div.remove(), 15000);
+            }, 1500);
+        }
+        createFloatingText();
+
+        function waterPlant() {
+            const flower = document.getElementById('flower');
+            const bar = document.getElementById('progressBar');
+            const btn = document.getElementById('waterBtn');
+            const letter = document.getElementById('loveLetter');
+
+            growthLevel += 34;
+            bar.style.width = Math.min(growthLevel, 100) + '%';
+
+            if (growthLevel > 30 && growthLevel < 70) {
+                flower.innerHTML = '🌿';
+            } else if (growthLevel >= 70 && growthLevel < 100) {
+                flower.innerHTML = '🌷';
+            } else if (growthLevel >= 100) {
+                flower.innerHTML = '🌹';
+                flower.style.transform = 'scale(1.4)';
+                btn.style.display = 'none';
+                letter.style.display = 'block';
+                startConfetti();
+            }
+        }
+
+        function startConfetti() {
+            for(let i = 0; i < 60; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart-confetti');
+                    heart.innerHTML = Math.random() > 0.5 ? '❤️' : '🌹';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                    heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    heart.style.opacity = Math.random();
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 5000);
+                }, i * 50);
+            }
+        }
+    </script>
+</body>
+</html>
